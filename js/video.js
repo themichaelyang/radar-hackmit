@@ -21,7 +21,7 @@ function getVideo() {
     console.error(error);
   }
   // document.body.appendChild(video);
-  return videoPromise;
+  return video;
 }
 
 function getVideoFrame(video) {
