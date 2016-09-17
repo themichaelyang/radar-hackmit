@@ -1,10 +1,13 @@
 'use strict';
 
+let debug = false;
+
 function getVideo() {
   // consider setting the video constraints in the individual video media track within the stream
   let video = document.createElement('video');
   let userMediaConstraints = {
-    video: { width: 480, height: 270, facingMode: 'user' }, // set a framerate constraint?
+    // video: { width: 480, height: 270, facingMode: 'user' }, // set a framerate constraint?
+    video: { width: 240, height: 135, facingMode: 'user' }, // set a framerate constraint?
     audio: false
   };
 
@@ -40,9 +43,9 @@ function main() {
 }
 
 function Radar() {
-  let fps = 30;
+  let fps = 10;
   let radar = new Object();
-  let comparer = new ImageCompare();
+  // let comparer = new ImageCompare();
   let previousFrame;
 
   radar.start = () => {
@@ -53,7 +56,7 @@ function Radar() {
   }
 
   function loop() { // we should pass in time differences?
-    let currentFrame = getVideoFrame(radar.video);
+    let currentFrame = getVideoFrame(radar.video); // frame in canvas element
     process(currentFrame, previousFrame);
 
     previousFrame = currentFrame;
@@ -68,8 +71,7 @@ function Radar() {
 
   function process(currentFrame, previousFrame) {
     if (previousFrame) {
-      let xy = comparer.compare(currentFrame, previousFrame);
-      console.log(xy);
+
     }
   }
 

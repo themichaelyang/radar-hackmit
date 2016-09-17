@@ -26,9 +26,9 @@ function ImageCompare() {
             }
         }
 
-        let location = [sumx / changes, sumy / changes]
+        let location = [sumx / changes, sumy / changes];
 
-        return location
+        return location;
 
 
     function comparepixel(p1data, p2data) {
@@ -44,7 +44,7 @@ function ImageCompare() {
         if (distance < sensitivity) {
             diff = true;
         }
-        return diff
+        return diff;
 
         }
     }
