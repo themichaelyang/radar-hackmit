@@ -1,4 +1,4 @@
-// 'use strict'
+"use strict";
 
 function getVideo() {
   // consider setting the video constraints in the individual video media track within the stream
@@ -20,6 +20,39 @@ function getVideo() {
   function onGetUserMediaError(error) {
     console.error(error);
   }
+  // document.body.appendChild(video);
+  return videoPromise;
+}
 
-  document.body.appendChild(video);
+function getVideoFrame(video) {
+  let canvas = document.createElement('canvas');
+  canvas.width = video.width;
+  canvas.height = video.height;
+  return canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+}
+
+function main() {
+  let video = getVideo();
+
+}
+
+function radar() {
+  let fps = 30;
+  this.start = () => {
+    this.video = getVideo(); // change to promise interface?
+    window.requestAnimationFrame(() => {
+      loop();
+    });
+  }
+
+  function loop() { // we should pass in time differences?
+    window.setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        loop();
+        getVideoFrame(video);
+      })
+    }, 1000 / fps);
+  }
+
+  return this;
 }
