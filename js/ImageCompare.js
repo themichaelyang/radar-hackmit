@@ -1,9 +1,6 @@
-
-
-"use strict";
+'use strict';
 
 function ImageCompare() {
-
 
     let sensitivity = 30;
 
@@ -51,7 +48,6 @@ function ImageCompare() {
 
         }
     }
-
 
     return {
         compare: compare

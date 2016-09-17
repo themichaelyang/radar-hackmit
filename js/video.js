@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function getVideo() {
   // consider setting the video constraints in the individual video media track within the stream
@@ -26,20 +26,24 @@ function getVideo() {
 }
 
 function getVideoFrame(video) {
-  let canvas = document.createElement('canvas');
+  let canvas = document.createElement('canvas'); // consider reading raw img data from videos
+  let ctx = canvas.getContext('2d');
   canvas.width = video.width;
   canvas.height = video.height;
-  return canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+  return canvas;
 }
 
 function main() {
-  let video = getVideo();
-
+  let r = new Radar();
+  r.start();
 }
 
-function radar() {
+function Radar() {
   let fps = 30;
   let radar = new Object();
+  let comparer = new ImageCompare();
+  let previousFrame;
 
   radar.start = () => {
     radar.video = getVideo(); // change to promise interface?
@@ -49,18 +53,27 @@ function radar() {
   }
 
   function loop() { // we should pass in time differences?
+    let currentFrame = getVideoFrame(radar.video);
+    process(currentFrame, previousFrame);
+
+    previousFrame = currentFrame;
+
     window.setTimeout(() => {
       window.requestAnimationFrame(() => {
         loop();
-        let frame = getVideoFrame(radar.video);
-        process(frame);
       })
     }, 1000 / fps);
+
   }
 
-  function process(frame) {
-
+  function process(currentFrame, previousFrame) {
+    if (previousFrame) {
+      let xy = comparer.compare(currentFrame, previousFrame);
+      console.log(xy);
+    }
   }
 
   return radar;
 }
+
+main();
