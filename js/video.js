@@ -4,7 +4,7 @@ function getVideo() {
   // consider setting the video constraints in the individual video media track within the stream
   let video = document.createElement('video');
   let userMediaConstraints = {
-    video: { width: 480, height: 270, facingMode: 'user' },
+    video: { width: 480, height: 270, facingMode: 'user' }, // set a framerate constraint?
     audio: false
   };
 
@@ -20,7 +20,8 @@ function getVideo() {
   function onGetUserMediaError(error) {
     console.error(error);
   }
-  // document.body.appendChild(video);
+
+  document.body.appendChild(video);
   return video;
 }
 
@@ -38,8 +39,10 @@ function main() {
 
 function radar() {
   let fps = 30;
-  this.start = () => {
-    this.video = getVideo(); // change to promise interface?
+  let radar = new Object();
+
+  radar.start = () => {
+    radar.video = getVideo(); // change to promise interface?
     window.requestAnimationFrame(() => {
       loop();
     });
@@ -49,10 +52,15 @@ function radar() {
     window.setTimeout(() => {
       window.requestAnimationFrame(() => {
         loop();
-        getVideoFrame(video);
+        let frame = getVideoFrame(radar.video);
+        process(frame);
       })
     }, 1000 / fps);
   }
 
-  return this;
+  function process(frame) {
+
+  }
+
+  return radar;
 }
