@@ -1,0 +1,39 @@
+
+
+"use strict";
+
+(function(App) {
+
+
+	App.ImageCompare = function() {
+        const sensitivity
+        let tempCanvas1, tempCanvas2
+        let height, width
+
+        function compare(tempCanvas1, tempCanvas2, sensitivity) {
+
+            tempCanvas1.drawImage(image1, 0, 0, width, height);
+            tempCanvas2.drawImage(image2, 0, 0, width, height);
+
+            let sumx = 0;
+            let sumy = 0;
+            let changetotal = 0;
+
+            for (let x = 0; x < width; x ++) {
+                for (let y = 0; y < height; y ++) {
+                    let pixel1 = getImageData(x, y, 1, 1,)
+                    let pixel2 = getImageData(x, y, 1, 1,)
+
+                    if pixel1.data 
+                }
+            }
+
+        function comparepixel(pixel1data, pixel2data, sensitivity) {
+            
+        }
+
+        }
+    }
+
+
+})();
