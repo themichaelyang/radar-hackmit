@@ -33,14 +33,14 @@ gulp.task('copy-polyfill', function() {
 });
 
 gulp.task('copy-adapter', function() {
-  del(appDir+'js/vendor');
+  // del(appDir+'js/vendor');
   return copyFiles('node_modules/webrtc-adapter/out/adapter.js', appDir+'/js/vendor');
 });
 
-gulp.task('build', ['build-js', 'build-html', 'copy-polyfill', 'copy-adapter']);
+gulp.task('build', ['build-js', 'build-html']);//,// 'copy-polyfill', 'copy-adapter']);
 
 gulp.task('copy-libraries', function() {
-  del(appDir+'js/vendor');
+  // del(appDir+'js/vendor');
   return copyFiles('node_modules/babel-polyfill/dist/polyfill.min.js', appDir+'/js/vendor');
 });
 

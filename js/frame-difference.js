@@ -4,8 +4,15 @@ let debug = false;
 let canvas;
 let context;
 let pos = [0, 0];
-let xpixels = 480;
-let ypixels = 270;
+// let xpixels = 480;
+// let ypixels = 270;
+
+let xpixels = 360;
+let ypixels = 200;
+
+// let xpixels = 240;
+// let ypixels = 135;
+
 
 function getVideo() {
 
@@ -66,7 +73,7 @@ function compare(currentFrame, previousFrame) {
     for (let i = 0; i < currentFrameImageData.data.length; i += 4) {
         // canvas image data is ordered "r, g, b, a" in a clamped byte array
         // processedImageData = processedImageData.data[i, i + 3]
-        if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.2) {
+        if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.15) {
             let index = i / 4;
             changedIndexes.push(index);
 
@@ -106,15 +113,13 @@ function indexToCoordinates(index, width) { // remember that the index is r g b 
 }
 
 function Radar() {
-  let fps = 16;
+  let fps = 30;
   let radar = new Object();
   // let comparer = new ImageCompare();
   let previousFrame;
 
-
   radar.start = () => {
     radar.video = getVideo(); // change to promise interface?
-
   }
 
   radar.startLoop = () => {
@@ -148,7 +153,7 @@ function Radar() {
         //   pos[1] = xy[2] / xpixels
         }
         // context.putImageData(processedImageData, pos[0], pos[1]);
-        console.log(pos);
+        // console.log(pos);
         context.fillStyle = 'red';
         context.fillRect(pos[0], pos[1], 20, 20);
     //   console.log(xy);
@@ -158,11 +163,4 @@ function Radar() {
   return radar;
 }
 
-function main() {
-  let r = Radar();
-  r.start();
-
-  window.setTimeout(()=>{r.startLoop()}, 500); // absolute trash, please use promises next time
-}
-
-window.onload = main;
+// why isn't this separated into files?!??!
