@@ -58,7 +58,6 @@ function Radar() {
 
   radar.start = () => {
     radar.video = getVideo(); // change to promise interface?
-
   }
 
   radar.startLoop = () => {
