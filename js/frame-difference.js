@@ -5,10 +5,17 @@ function frameDifference(currentFrame, previousFrame) { // takes canvas with fra
   }
 }
 
-function indexToCoordinates(index, width, height) {
 
-}
 
-function coordinatesToIndex(coordinates, width, height) { // coordinates is obj {x, y}
+function createCoordinatesObject(x, y) {
+  let coordinates = new Object();
+  coordinates.indexToCoordinates(index, width, height) {
+
+  }
+
+  coordinates.coordinatesToIndex(coordinates, width, height) { // coordinates is obj {x, y}
+
+  }
+  Object.create();
 
 }
