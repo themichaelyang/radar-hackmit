@@ -29,8 +29,8 @@ function initialize() {
 }
 
 function pan(num, num2){
-	head += num * .5
-	pit += num2 * .5
+	head += num * 10
+	pit += num2 * 10
 	panorama.setPov({
 		heading:head,pitch:pit
 	})
@@ -38,10 +38,10 @@ function pan(num, num2){
 
 function zoom(num){
 	zoo += num
-	if (zoo < 0) {
-		zoo = 0
-	}
-	zoo = zoo * .5
+	// if (zoo < 0) {
+	// 	zoo = 0
+	// }
+	zoo = zoo * 10
 	panorama.setZoom(zoo + 1)
 }
 
