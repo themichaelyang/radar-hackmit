@@ -1,11 +1,11 @@
 'use strict';
 
 let debug = false;
-let canvas
-let context
-let pos = [0, 0]
-let xpixels = 480
-let ypixels = 270
+let canvas;
+let context;
+let pos = [0, 0];
+let xpixels = 480;
+let ypixels = 270;
 
 function getVideo() {
 
