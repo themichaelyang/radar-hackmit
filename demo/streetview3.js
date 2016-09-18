@@ -19,7 +19,7 @@ function initialize() {
 
 
 
-function(x,y,z){
+function setPosition(x,y,z){
 	this.x = x;
 	this.y = y;
 	this.z = z;
