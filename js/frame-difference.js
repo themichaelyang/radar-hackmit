@@ -73,7 +73,7 @@ function compare(currentFrame, previousFrame) {
     for (let i = 0; i < currentFrameImageData.data.length; i += 4) {
         // canvas image data is ordered "r, g, b, a" in a clamped byte array
         // processedImageData = processedImageData.data[i, i + 3]
-        if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.15) {
+        if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.2) {
             let index = i / 4;
             changedIndexes.push(index);
 
@@ -149,7 +149,7 @@ function Radar() {
     if (previousFrame) {
       let xy = compare(currentFrame, previousFrame, xpixels, ypixels); // this is terrible, fix this later
       let coords = {};
-      if (xy[0] > 50){
+      if (xy[0] > 150){
           // pos[0] = xy[1];
           // pos[1] = xy[2];
           coords.x = xy[1];
