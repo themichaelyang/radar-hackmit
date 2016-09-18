@@ -65,13 +65,13 @@ function compare(currentFrame, previousFrame) {
     let changedIndexes = []
     let currentFrameImageData = currentFrame.getImageData(0, 0, xpixels, ypixels);
     let lastFrameImageData = previousFrame.getImageData(0, 0, xpixels, ypixels);
-	let processedImageData = currentFrame.createImageData(currentFrameImageData);
+	  let processedImageData = currentFrame.createImageData(currentFrameImageData);
 
-    for (var i = 0; i < currentFrameImageData.data.length; i += 4) {
+    for (let i = 0; i < currentFrameImageData.data.length; i += 4) {
         // canvas image data is ordered "r, g, b, a" in a clamped byte array
         // processedImageData = processedImageData.data[i, i + 3]
         if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.2) {
-            var index = i / 4;
+            let index = i / 4;
             changedIndexes.push(index);
 
             processedImageData.data[i] = 0;
@@ -83,19 +83,19 @@ function compare(currentFrame, previousFrame) {
     context.putImageData(processedImageData, 0, 0);
 
     let changedxy = changedIndexes.map(function(x){
-        return indexToCoordinates(x, xpixels)
+        return indexToCoordinates(x, xpixels);
     })
 
-    let changes = changedxy.length
-    let sumx = 0
-    let sumy = 0
+    let changes = changedxy.length;
+    let sumx = 0;
+    let sumy = 0;
     // let
     for (let pixel of changedxy) {
-        sumx += pixel.x
-        sumy += pixel.y
+        sumx += pixel.x;
+        sumy += pixel.y;
     }
-    return [changes, sumx/changes, sumy/changes]
-    console.log(change, sumx/changes, sumy/changes)
+    return [changes, sumx/changes, sumy/changes];
+    console.log(change, sumx/changes, sumy/changes);
 
     // context.putImageData(processedImageData, 0, 0);
 }
@@ -112,7 +112,7 @@ function indexToCoordinates(index, width) { // remember that the index is r g b 
 function Radar() {
   let fps = 16;
   let radar = new Object();
-  let comparer = new ImageCompare();
+  // let comparer = new ImageCompare();
   let previousFrame;
 
 
@@ -146,14 +146,14 @@ function Radar() {
       let xy = compare(currentFrame, previousFrame, xpixels, ypixels);
 
       if (xy[0] > 50){
-          pos[0] = xy[1]
-          pos[1] = xy[2]
+          pos[0] = xy[1];
+          pos[1] = xy[2];
         //   pos[0] = xy[1] / ypixels
         //   pos[1] = xy[2] / xpixels
         }
         // context.putImageData(processedImageData, pos[0], pos[1]);
-        console.log(pos)
-        context.fillStyle = 'green'
+        console.log(pos);
+        context.fillStyle = 'red';
         context.fillRect(pos[0], pos[1], 20, 20);
     //   console.log(xy);
     }
