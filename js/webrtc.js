@@ -32,9 +32,9 @@
 // }
 
 // use a library instead lol
+
 function Caller() {
   let caller = new Object();
-  let peer = new Peer('caller', {key: 'lhlz7j58jh71ra4i'});
 
   caller.call = function() {
     let connection = peer.connect('callee');
@@ -51,10 +51,19 @@ function Callee() {
   let peer = new Peer('callee', {key: 'lhlz7j58jh71ra4i'});
 
   callee.listen = function() {
-    peer.on('connect', () => {
-      connection.on('data', data => {
-        console.log(data);
+    return new Promise((resolve, reject) => {
+      peer.on('connect', (connection) => {
+        callee.connection = connection;
+        resolve(connection);
       });
-    })
+    });
   }
+
+  callee.send = function(data) {
+    if (callee.connection) {
+      callee.connection.send(data);
+    }
+  }
+
+  return callee;
 }
