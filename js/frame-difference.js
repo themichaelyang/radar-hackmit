@@ -7,11 +7,11 @@ let pos = [0, 0];
 // let xpixels = 480;
 // let ypixels = 270;
 
-let xpixels = 360;
-let ypixels = 200;
+// let xpixels = 360;
+// let ypixels = 200;
 
-// let xpixels = 240;
-// let ypixels = 135;
+let xpixels = 240;
+let ypixels = 135;
 
 
 function getVideo() {
@@ -113,30 +113,33 @@ function indexToCoordinates(index, width) { // remember that the index is r g b 
 }
 
 function Radar() {
-  let fps = 30;
+  let fps = 20;
   let radar = new Object();
   // let comparer = new ImageCompare();
   let previousFrame;
+  radar.coords = {x: -1, y: -1};
 
   radar.start = () => {
     radar.video = getVideo(); // change to promise interface?
   }
 
-  radar.startLoop = () => {
+  radar.startLoop = function(callOnLoop) {
     window.requestAnimationFrame(() => {
-      loop();
+      loop(callOnLoop);
     });
   }
 
-  function loop() { // we should pass in time differences?
+  function loop(callOnLoop) { // we should pass in time differences?
     let currentFrame = getVideoFrame(radar.video);
     process(currentFrame, previousFrame);
+
+    callOnLoop();
 
     previousFrame = currentFrame;
 
     window.setTimeout(() => {
       window.requestAnimationFrame(() => {
-        loop();
+        loop(callOnLoop);
       })
     }, 1000 / fps);
 
@@ -144,20 +147,35 @@ function Radar() {
 
   function process(currentFrame, previousFrame) {
     if (previousFrame) {
-      let xy = compare(currentFrame, previousFrame, xpixels, ypixels);
-
+      let xy = compare(currentFrame, previousFrame, xpixels, ypixels); // this is terrible, fix this later
+      let coords = {};
       if (xy[0] > 50){
-          pos[0] = xy[1];
-          pos[1] = xy[2];
+          // pos[0] = xy[1];
+          // pos[1] = xy[2];
+          coords.x = xy[1];
+          coords.y = xy[2];
+
         //   pos[0] = xy[1] / ypixels
         //   pos[1] = xy[2] / xpixels
         }
         // context.putImageData(processedImageData, pos[0], pos[1]);
         // console.log(pos);
         context.fillStyle = 'red';
-        context.fillRect(pos[0], pos[1], 20, 20);
+        context.fillRect(coords.x, coords.y, 20, 20);
     //   console.log(xy);
+        radar.coords = normalizeCoordinates(coords);
     }
+  }
+
+  function normalizeCoordinates(coordinates) {
+    return {
+      x: coordinates.x / xpixels,
+      y: coordinates.y / ypixels
+    }
+  }
+
+  radar.getCoords = function() {
+    return radar.coords;
   }
 
   return radar;
