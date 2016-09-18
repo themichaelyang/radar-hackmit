@@ -21,8 +21,14 @@ function main() {
 
     x = data.x;
     y = data.y;
-    console.log(x, y, z);
+    console.log(window.getXYZ());
   });
+
+  window.getXYZ = function() {
+    return {x: x, y: y, z: z};
+  }
 }
+
+
 
 window.onload = main;
