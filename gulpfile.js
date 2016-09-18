@@ -50,7 +50,7 @@ function copyFiles(source, destination) {
 }
 
 gulp.task('watch', ['build'], function() {
-  var watcher = gulp.watch('src/**/*', ['build']);
+  var watcher = gulp.watch('js/*', ['build-js']);
   watcher.on('change', function(event) {
     console.log('File "' + event.path + '" was ' + event.type + ', running tasks...');
   });

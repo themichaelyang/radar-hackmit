@@ -48,10 +48,6 @@ function getVideoFrame(video) {
   return ctx;
 }
 
-function main() {
-
-}
-
 function getPixelDistance(one, two, i) {
     var rdiff = one.data[i] - two.data[i];
     var gdiff = one.data[i + 1] - two.data[i + 1];
@@ -162,4 +158,11 @@ function Radar() {
   return radar;
 }
 
-main();
+function main() {
+  let r = Radar();
+  r.start();
+
+  window.setTimeout(()=>{r.startLoop()}, 500); // absolute trash, please use promises next time
+}
+
+window.onload = main;
