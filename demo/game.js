@@ -1,5 +1,6 @@
 var cursor;
 var duck = [];
+var duckOpposite = [];
 var score;
 
 function startGame(){
@@ -13,7 +14,7 @@ var myGameArea = {
 	canvas : document.createElement('canvas'),
 	start : function(){
 		this.canvas.width = 1600;
-		this.canvas.height = 700;
+		this.canvas.height = 800;
 		this.context = this.canvas.getContext('2d');
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.frameNo = 0;
@@ -107,10 +108,14 @@ function updateGameArea(){
 
 	for(i = 0; i<duck.length;i++){
 		if(cursor.collision(duck[i]) && myGameArea.keys[32]){ //z
-			myGameArea.context.clearRect(duck[i].x, duck[i].y, duck[i].width,duck[i].height);
+			duck.splice(i,1);
+			return;
+		}
+	}
 
-			score.text = "SCORE:" + (i*5);
-
+	for(j = 0; j<duckOpposite.length; j++){
+		if(cursor.collision(duckOpposite[j]) && myGameArea.keys[32]){
+			duckOpposite.splice(j,1);
 			return;
 		}
 	}
@@ -149,21 +154,32 @@ function updateGameArea(){
 	myGameArea.frameNo += 1;
 	if(myGameArea.frameNo == 1 || everyInterval(150)){
 		//duck.push(new component(Math.floor((Math.random() * 1000) + 1),(Math.floor(Math.random() * 750) + 1),'green',30,30));
-		duck.push(new component(30, 30, 'green', 0, Math.floor((Math.random()*600)+1)));
+		duck.push(new component(90,90, 'green', 0, Math.floor((Math.random()*600)+1)));
 		//duck.push(new component(30, 30, 'green', myGameArea.canvas.width-30, Math.floor((Math.random()*500)+1)));
+	}
+	if(myGameArea.frameNo == 1 || everyInterval(300)){
+		duckOpposite.push(new component(50, 50, 'blue', (myGameArea.canvas.width-30), Math.floor((Math.random()*600)+1)));
 	}
 
 	for(i = 1; i<duck.length; i++){
 		duck[i].x += 3;
 		duck[i].update();
-	}
-	for(i = 1; i<duck.length; i++){
 		if(duck[i].x == myGameArea.canvas.width-30){
 			myGameArea.stop();
 		}
 	}
+
+	for(j = 1; j<duckOpposite.length; j++){
+		duckOpposite[j].x -=5;
+		duckOpposite[j].update();
+		if(duckOpposite[j].x == 30){
+			myGameArea.stop();
+		}
+	}
 	
+	score.text = "SCORE: " + myGameArea.frameNo;
 	score.update();
+
 	cursor.newPos();
 	cursor.update();
 }
