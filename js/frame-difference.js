@@ -73,7 +73,7 @@ function compare(currentFrame, previousFrame) {
     for (let i = 0; i < currentFrameImageData.data.length; i += 4) {
         // canvas image data is ordered "r, g, b, a" in a clamped byte array
         // processedImageData = processedImageData.data[i, i + 3]
-        if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.2) {
+        if (getPixelDistance(currentFrameImageData, lastFrameImageData, i) > 0.15) {
             let index = i / 4;
             changedIndexes.push(index);
 

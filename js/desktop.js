@@ -21,7 +21,8 @@ function main() {
 
     x = data.x;
     y = data.y;
-    console.log(window.getXYZ());
+    htmlCoords(window.getXYZ());
+    // console.log(JSON.stringify(window.getXYZ()));
   });
 
   window.getXYZ = function() {
@@ -29,6 +30,11 @@ function main() {
   }
 }
 
+function htmlCoords(coords) {
+  // document.getElementById('x').innerHTML = coords.x;
+  // document.getElementById('y').innerHTML = coords.y;
+  // document.getElementById('z').innerHTML = coords.z;
+}
 
 
 window.onload = main;

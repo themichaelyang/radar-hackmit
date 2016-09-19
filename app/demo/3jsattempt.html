@@ -10,7 +10,22 @@
             }
         </style>
     </head>
+    <!-- <script src="./js/main.js"></script> -->
+    <!-- <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script> -->
+    <script src="/js/vendor/peer.js"></script>
+    <script src="/js/vendor/adapter.js"></script>
+    <script src="/js/vendor/polyfill.min.js"></script>
+
+    <!-- <script src="/js/ImageCompare.js"></script> -->
+    <script src="/js/webrtc.js"></script>
+    <script src="/js/frame-difference.js"></script>
+    <script src="/js/desktop.js"></script>
     <body>
+      <!-- <div>
+        x: <p id='x'></p>
+        y: <p id='y'></p>
+        z: <p id='z'></p>
+      </div> -->
         <script src="three.min.js"></script>
         <script>
             var scene = new THREE.Scene();
@@ -35,33 +50,30 @@
                 renderer.render(scene, camera);
             };
             render();
+            function threedloop() { // we should pass in time differences?
+              let fps = 30;
 
-            document.addEventListener('keydown', function(event) {
-
-                if(event.keyCode == 37) {
-                    cube.position.x -= 100;
-                }
-                else if(event.keyCode == 39) {
-                    cube.position.x += 100;
-                }
-                else if(event.keyCode == 38) {
-                    cube.position.y += 100;
-                }
-                else if(event.keyCode == 40) {
-                    cube.position.y -= 100;
-                }
-                else if(event.keyCode == 87) {
-                    cube.position.z -= 100;
-                }
-                else if(event.keyCode == 83) {
-                    cube.position.z += 100;
-                }
-            });
+              window.setTimeout(() => {
+                window.requestAnimationFrame(() => {
+                  set_cube_position(getXYZ());
+                  threedloop();
+                })
+              }, 1000 / fps);
+            }
 
             function set_cube_position(coord) {
-                cube.position.x = (coord.x) * window.innerWidth;
-                cube.position.y = (coord.y) * window.innerHeight;
-                cube.position.z = (coord.z) * 2;
+                let newCoord = changeRange(coord);
+                cube.position.x = (newCoord.x) * window.innerWidth;
+                cube.position.y = (newCoord.y) * window.innerHeight;
+                cube.position.z = (newCoord.z) * 2;
+            }
+
+            function changeRange(coord) {
+              return {
+                x: 2 * (coord.x - 0.5),
+                y: 2 * (coord.y - 0.5),
+                z: 2 * (coord.z - 0.5),
+              }
             }
 
             let coord = {
@@ -69,6 +81,9 @@
                 y: .5,
                 z: 0
             }
+
+            threedloop();
+
             set_cube_position(coord);
         </script>
     </body>
